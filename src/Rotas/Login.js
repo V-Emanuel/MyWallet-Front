@@ -1,6 +1,7 @@
 import { React, useEffect, useState} from "react";
 import axios from "axios";
-import { Logo, Body } from "../Styled/LoginRegisterCSS";
+import  Body from "../Styled/InputButtonCSS";
+import Logo from "../Styled/LogoCSS";
 import { Link } from "react-router-dom";
 
 export default function Login() {

@@ -1,5 +1,6 @@
 import { React, useEffect, useState, useContext } from "react";
-import {Logo, Body } from "../Styled/LoginRegisterCSS";
+import Body from "../Styled/InputButtonCSS";
+import Logo from "../Styled/LogoCSS";
 import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";

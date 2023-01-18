@@ -4,6 +4,8 @@ import { React, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./Rotas/Login";
 import Register from "./Rotas/Register";
+import NewInput from "./Rotas/NewInput";
+import NewOutput from "./Rotas/NewOutput";
 
 export default function App() {
 
@@ -14,6 +16,8 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/cadastro" element={<Register />} />
+          <Route path="/nova-entrada" element={<NewInput />} />
+          <Route path="/nova-saida" element={<NewOutput />} />
         </Routes>
       </BrowserRouter>
     </Body>
@@ -28,5 +32,6 @@ const Body = styled.div`
   width: 100vw;
   height: 100vh;
   background-color: #8C11BE;
+  position: relative;
 ;
 `;
