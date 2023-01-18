@@ -6,6 +6,7 @@ import Login from "./Rotas/Login";
 import Register from "./Rotas/Register";
 import NewInput from "./Rotas/NewInput";
 import NewOutput from "./Rotas/NewOutput";
+import Home from "./Rotas/Home"
 
 export default function App() {
 
@@ -18,6 +19,7 @@ export default function App() {
           <Route path="/cadastro" element={<Register />} />
           <Route path="/nova-entrada" element={<NewInput />} />
           <Route path="/nova-saida" element={<NewOutput />} />
+          <Route path="/home" element={<Home />} />
         </Routes>
       </BrowserRouter>
     </Body>
