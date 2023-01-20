@@ -3,7 +3,7 @@ import GlobalStyle from "./Components/GlobalStyle"
 import { React, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./Rotas/Login";
-import Register from "./Rotas/Register";
+import SignOn from "./Rotas/SignOn";
 import NewInput from "./Rotas/NewInput";
 import NewOutput from "./Rotas/NewOutput";
 import Home from "./Rotas/Home"
@@ -16,7 +16,7 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/cadastro" element={<Register />} />
+          <Route path="/cadastro" element={<SignOn />} />
           <Route path="/nova-entrada" element={<NewInput />} />
           <Route path="/nova-saida" element={<NewOutput />} />
           <Route path="/home" element={<Home />} />

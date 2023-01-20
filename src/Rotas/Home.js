@@ -8,45 +8,48 @@ import { Header, TopPage } from "../Styled/HeaderCSS";
 export default function Home() {
 
     const [registers, setRegisters] = useState([]);
+    const [show, setShow] = useState(false)
+    /*const testRegister = [{ id: 1, date: "12/04", description: "Jogo do vasco", value: "123,45", type: "output" },
+    { id: 2, date: "09/02", description: "Saque aniversário", value: "123,45", type: "input" },
+    { id: 3, date: "31/12", description: "bolsa reveião", value: "37,50", type: "input" },
+    { id: 4, date: "26/02", description: "Aniversário", value: "9257,45", type: "output" }]*/
+    const testRegister = [];
+    useEffect(() => {
+        setRegisters(testRegister);
+        console.log(testRegister === [])
+        if(testRegister === []){
+            setShow(false)
+        }else{
+            setShow(true)
+        }
+    }, [])
+
     return (
         <>
             <TopPage><Header><p>Olá, Fulano</p></Header></TopPage>
             <Icon><Link to={"/"}><ion-icon name="exit-outline"></ion-icon></Link></Icon>
             <Registers>
-                {/*<NoRegister>
-                    <p>Não há registros de
-                    entrada ou saída</p>
+                {/*<NoRegister show={show}>
+                    <p>Não há registros de entrada ou saída</p>
     </NoRegister>*/}
-                <Register>
-                    <div>
-                        <p className="date">26/02</p>
-                        <p className="description">Aniverśario</p>
-                    </div>
-                    <p className="value">R$345,87</p>
-                </Register>
-                <Register>
-                    <div>
-                        <p className="date">13/09</p>
-                        <p className="description">Jogo do Vasco</p>
-                    </div>
-                    <p className="value">R$1234,99</p>
-                </Register>
-                <Register>
-                    <div>
-                        <p className="date">09/04</p>
-                        <p className="description">Compras</p>
-                    </div>
-                    <p className="value">R$79,00</p>
-                </Register>
+                {registers.map(i =>
+                    <Register show={show} key={i.id}>
+                        <div>
+                            <p className="date">{i.date}</p>
+                            <p className="description">{i.description}</p>
+                        </div>
+                        <p className={`${i.type}`}>{i.value}</p>
+                    </Register>
+                )}
             </Registers>
             <RegisterButtons>
-                <Link to={"/nova-entrada"}>
+                <Link to={"/nova-entrada"} style={{ textDecoration: 'none' }}>
                     <div>
                         <ion-icon name="add-circle-outline"></ion-icon>
                         <p>Nova entrada</p>
                     </div>
                 </Link>
-                <Link to={"/nova-saida"}>
+                <Link to={"/nova-saida"} style={{ textDecoration: 'none' }}>
                     <div>
                         <ion-icon name="remove-circle-outline"></ion-icon>
                         <p>Nova saída</p>
@@ -82,7 +85,7 @@ const Registers = styled.div`
 const NoRegister = styled.div`
     width: 100%;
     height: 100%;
-    display: flex;
+    display: ${props => props.show ? "flex" : "none"};
     align-items: center;
     justify-content: center;
     p{
@@ -103,7 +106,7 @@ const NoRegister = styled.div`
 const Register = styled.div`
     width: 100%;
     height: 35px;
-    display: flex;
+    display: ${props => props.show ? "flex" : "none"};
     align-items: center;
     justify-content: space-between;
     font-family: 'Raleway';
@@ -121,8 +124,11 @@ const Register = styled.div`
             color: #000000;
         }
     }
-    .value{
+    .input{
         color: #03AC00;
+    }
+    .output{
+        color: #C70000;
     }
 `;
 const RegisterButtons = styled.div`

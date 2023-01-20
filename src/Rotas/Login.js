@@ -15,8 +15,10 @@ export default function Login() {
     }
 
     return (
+        <>
+        <Logo>MyWallet</Logo>
         <Body>
-            <Logo>MyWallet</Logo>
+            
             <form onSubmit={login}>
                 <input
                     value={email}
@@ -38,8 +40,9 @@ export default function Login() {
                 </input>
                 <button type="submit"><p>Entrar</p></button>
             </form>
-            <Link to="/cadastro"><p>Primeira vez? Cadastre-se!</p></Link>
+            <Link to="/cadastro" style={{textDecoration: 'none'}}><p>Primeira vez? Cadastre-se!</p></Link>
         </Body>
+        </>
     );
 }
 

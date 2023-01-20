@@ -1,17 +1,15 @@
 import { React, useEffect, useState, useContext } from "react";
 import Body from "../Styled/InputButtonCSS";
 import Logo from "../Styled/LogoCSS";
-import { useNavigate, Link } from "react-router-dom";
-import styled from "styled-components";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
-export default function Register() {
+export default function SignOn() {
 
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
-    const [cpf, setCpf] = useState("");
-    const navigate = useNavigate();
+    const [confirmePassword, setConfirmePassword] = useState("");
     const [usage, setUsage] = useState(false);
 
     function createAccount(e) {
@@ -19,21 +17,15 @@ export default function Register() {
     }
 
     return (
+        <>
+        <Logo>MyWallet</Logo>
         <Body>
-            <Logo>MyWallet</Logo>
             <form onSubmit={createAccount}>
                 <input
                     value={name}
                     type="text"
                     placeholder="Nome"
                     onChange={e => setName(e.target.value)}
-                    required
-                    disabled={usage}>
-                </input>
-                <input
-                    type="number"
-                    placeholder="CPF"
-                    onChange={e => setCpf(e.target.value)}
                     required
                     disabled={usage}>
                 </input>
@@ -53,11 +45,20 @@ export default function Register() {
                     required
                     disabled={usage}>
                 </input>
+                <input
+                    value={confirmePassword}
+                    type="password"
+                    placeholder="Confirme a senha"
+                    onChange={e => setConfirmePassword(e.target.value)}
+                    required
+                    disabled={usage}>
+                </input>
                 <button type="submit" disabled={usage}>
                     <p>Cadastrar</p>
                 </button>
             </form>
-            <Link to="/"><p>Já tem uma conta? Entre agora!</p></Link>
+            <Link to="/" style={{ textDecoration: 'none' }}><p>Já tem uma conta? Entre agora!</p></Link>
         </Body>
+        </>
     );
 }
