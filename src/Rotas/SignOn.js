@@ -1,19 +1,31 @@
 import { React, useEffect, useState, useContext } from "react";
 import Body from "../Styled/InputButtonCSS";
 import Logo from "../Styled/LogoCSS";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function SignOn() {
 
-    const [name, setName] = useState("");
-    const [password, setPassword] = useState("");
+    const [nome, setNome] = useState("");
+    const [senha, setSenha] = useState("");
     const [email, setEmail] = useState("");
-    const [confirmePassword, setConfirmePassword] = useState("");
+    const [confirmeSenha, setConfirmeSenha] = useState("");
     const [usage, setUsage] = useState(false);
+    const navigate = useNavigate();
 
     function createAccount(e) {
         e.preventDefault();
+        const URL = `${process.env.REACT_APP_API_URL}/sign-up`
+        const body = {nome, email, senha, confirmeSenha};
+        setUsage(true)
+        const promise = axios.post(URL, body);
+        promise.then((res) => {
+            navigate("/")
+        })
+        promise.catch((err) => {
+            alert(err.response.data.message);
+            setUsage(false);
+        })
     }
 
     return (
@@ -22,10 +34,10 @@ export default function SignOn() {
         <Body>
             <form onSubmit={createAccount}>
                 <input
-                    value={name}
+                    value={nome}
                     type="text"
                     placeholder="Nome"
-                    onChange={e => setName(e.target.value)}
+                    onChange={e => setNome(e.target.value)}
                     required
                     disabled={usage}>
                 </input>
@@ -38,18 +50,18 @@ export default function SignOn() {
                     disabled={usage}>
                 </input>
                 <input
-                    value={password}
+                    value={senha}
                     type="password"
                     placeholder="Senha"
-                    onChange={e => setPassword(e.target.value)}
+                    onChange={e => setSenha(e.target.value)}
                     required
                     disabled={usage}>
                 </input>
                 <input
-                    value={confirmePassword}
+                    value={confirmeSenha}
                     type="password"
                     placeholder="Confirme a senha"
-                    onChange={e => setConfirmePassword(e.target.value)}
+                    onChange={e => setConfirmeSenha(e.target.value)}
                     required
                     disabled={usage}>
                 </input>

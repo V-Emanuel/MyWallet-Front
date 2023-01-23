@@ -6,13 +6,18 @@ import Login from "./Rotas/Login";
 import SignOn from "./Rotas/SignOn";
 import NewInput from "./Rotas/NewInput";
 import NewOutput from "./Rotas/NewOutput";
-import Home from "./Rotas/Home"
+import Home from "./Rotas/Home";
+import UserContext from "./Contexts/UserContext";
 
 export default function App() {
+
+  const [nome, setNome] = useState("");
+  const [token, setToken] = useState("");
 
   return (
     <Body>
       <GlobalStyle/>
+      <UserContext.Provider value = {{nome, setNome, token, setToken}}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
@@ -22,6 +27,7 @@ export default function App() {
           <Route path="/home" element={<Home />} />
         </Routes>
       </BrowserRouter>
+      </UserContext.Provider>
     </Body>
   );
 }

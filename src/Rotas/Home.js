@@ -1,28 +1,43 @@
 import { React, useEffect, useState, useContext } from "react";
-import Body from "../Styled/InputButtonCSS";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import { Header, TopPage } from "../Styled/HeaderCSS";
+import UserContext from "../Contexts/UserContext";
 
 export default function Home() {
 
+    const {token} = useContext(UserContext)
     const [registers, setRegisters] = useState([]);
-    const [show, setShow] = useState(false)
-    /*const testRegister = [{ id: 1, date: "12/04", description: "Jogo do vasco", value: "123,45", type: "output" },
-    { id: 2, date: "09/02", description: "Saque aniversário", value: "123,45", type: "input" },
-    { id: 3, date: "31/12", description: "bolsa reveião", value: "37,50", type: "input" },
-    { id: 4, date: "26/02", description: "Aniversário", value: "9257,45", type: "output" }]*/
-    const testRegister = [];
-    useEffect(() => {
-        setRegisters(testRegister);
-        console.log(testRegister === [])
-        if(testRegister === []){
-            setShow(false)
-        }else{
-            setShow(true)
+    const [show, setShow] = useState(false);
+    const [balance, setBalance] = useState(0);
+
+    const config = {
+        headers: {
+            "Authorization": `Bearer ${token}`
         }
-    }, [])
+    }
+
+    useEffect(() => {
+        const URL = `${process.env.REACT_APP_API_URL}/registers`
+        const promise = axios.get(URL, config)
+        promise.then((res) => {
+            setRegisters(res.data)
+        })
+
+        let sum = 0;
+
+        registers.map((item) => {
+            if (item.type === "input") {
+                return sum += parseFloat(item.value)
+            } else {
+                return sum -= parseFloat(item.value)
+            }
+        })
+
+        setBalance(sum)
+
+    }, [registers])
 
     return (
         <>
@@ -41,6 +56,10 @@ export default function Home() {
                         <p className={`${i.type}`}>{i.value}</p>
                     </Register>
                 )}
+                <Sum>
+                    <p>SALDO</p>
+                    <div className={balance >= 0 ? "sum positive" : "sum negative"} >{balance}</div>
+                </Sum>
             </Registers>
             <RegisterButtons>
                 <Link to={"/nova-entrada"} style={{ textDecoration: 'none' }}>
@@ -81,11 +100,44 @@ const Registers = styled.div`
     display: flex;
     align-items: center;
     flex-direction: column;
+    position: relative;
+`;
+const Sum = styled.div`
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    box-sizing: border-box;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    p{
+        font-family: 'Raleway';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 17px;
+        line-height: 20px;
+        color: #000000;
+    }
+    .sum{
+        font-family: 'Raleway';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 17px;
+        line-height: 20px;
+    }
+    .positive{
+        color: #03AC00;
+    }
+    .negative{
+        color: #C70000;
+    }
 `;
 const NoRegister = styled.div`
     width: 100%;
     height: 100%;
-    display: ${props => props.show ? "flex" : "none"};
+    display: flex;
     align-items: center;
     justify-content: center;
     p{
@@ -106,7 +158,7 @@ const NoRegister = styled.div`
 const Register = styled.div`
     width: 100%;
     height: 35px;
-    display: ${props => props.show ? "flex" : "none"};
+    display: flex;
     align-items: center;
     justify-content: space-between;
     font-family: 'Raleway';
